@@ -1,13 +1,6 @@
 #!/bin/sh
 echo "Registrando variaveis de ambiente padroes (DEV)"
-##DEV
-#export ENVIRONMENT=DEV
-# export AZURE_CLIENT_ID=cd837fef-9ee6-4f16-8c6a-cbe8ca5a3e04
-# export AZURE_SECRET=KwmPBS0eMZ009md7CblJvydyP8OCIhxl4S8zeA876Qk=
-# export AZURE_SUBSCRIPTION_ID=2c8f6873-a2f7-4b23-898d-25c24cd24f88
-# export AZURE_TENANT=2ed3917a-33f9-4b36-80ed-3697e30505b0
-#
-##AGENT
+
 export ENVIRONMENT=DEV
 export AZURE_CLIENT_ID=
 export AZURE_SECRET=
