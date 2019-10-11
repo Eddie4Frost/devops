@@ -1,0 +1,17 @@
+---
+
+- name: "[azure role] - Create storage account"
+  azure_rm_storageaccount:
+    resource_group: "{{ azure_resource_group }}"
+    name: "{{ azure_server_account_storage_name }}"
+    account_type: "{{ azure_server_account_storage_type }}"
+    tags:
+        Environment: "{{ azure_environment }}"
+  when: azure_server_account_storage_blob is defined or azure_server_account_storage_blob != ""
+
+- name: "[azure role] - Create and mount the backup managed disk to VM"
+  azure_rm_managed_disk:
+    name: "{{ azure_server_account_storage_name }}-data"
+    resource_group: "{{ azure_resource_group }}"
+    disk_size_gb: "{{ azure_server_managed_disk_size_gb }}"
+    managed_by: "{{ azure_server_name }}"

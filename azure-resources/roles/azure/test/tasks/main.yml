@@ -1,0 +1,20 @@
+---
+
+- debug:
+    msg: "{{ item.name }}"
+  loop: "{{ azure_server_services }}"
+
+- debug:
+    msg: "azure_environment {{ azure_environment }}"
+- debug:
+    msg: "azure_server_availabilityset_enabled {{ azure_server_availabilityset_enabled }}"
+- debug:
+    msg: "azure_server_instance_number {{ azure_server_instance_number }}"
+- debug:
+    msg: "azure_server_private_ip {{ azure_server_private_ip }}"
+- debug:
+    msg: "azure_server_nic_ip_config_public_ip {{ azure_server_nic_ip_config_public_ip }}"
+
+- debug:
+    msg: "ansible_host: {{ ansible_host }}"
+
