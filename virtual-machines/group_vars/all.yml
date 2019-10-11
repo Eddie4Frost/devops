@@ -1,0 +1,36 @@
+---
+#Azure information
+azure_environment: "{{ lookup('env','ENVIRONMENT') | trim }}"
+azure_resource_group: "rg-ambiente-{{ lookup('env','ENVIRONMENT') | trim | lower }}"
+azure_location: East US
+azure_client_id: "{{ lookup('env','AZURE_CLIENT_ID') | trim }}"
+azure_client_secret: "{{ lookup('env','AZURE_SECRET') | trim }}"
+azure_subscription_id: "{{ lookup('env','AZURE_SUBSCRIPTION_ID') | trim }}"
+azure_tenant: "{{ lookup('env','AZURE_TENANT') | trim }}"
+
+
+#Azure VM for VM
+azure_vm_prefix: "{{ lookup('env','VM_PREFIX') | trim | lower }}"
+azure_vm_server_name: "{{ azure_vm_prefix }}-{{ lookup('env','ENVIRONMENT') | trim | lower}}-oms"
+azure_vm_server_username: "{{ lookup('env','VM_SERVER_USERNAME') | trim}}"
+azure_vm_server_password: "{{ lookup('env','VM_SERVER_USERPASSWORD') | trim}}"
+azure_vm_server_account_storage_name: "{{ azure_vm_prefix }}{{ lookup('env','ENVIRONMENT') | trim | lower}}omsdisk"
+azure_vm_server_account_storage_type: "Premium_LRS"
+azure_vm_server_managed_disk_type: "Premium_LRS"
+azure_vm_server_vm_size: "{{ lookup('env','VM_SERVER_VM_SIZE') | trim}}"
+azure_vm_server_image_offer: "UbuntuServer"
+azure_vm_server_image_publisher: "Canonical"
+azure_vm_server_image_sku: "16.04-LTS"
+azure_vm_server_image_version: "latest"
+azure_vm_server_private_ip: "{{ lookup('env','VM_PRIVATE_IP') | trim | lower}}"
+
+azure_vm_server_nic_ip_config_name: "{{ azure_vm_prefix }}-{{ lookup('env','ENVIRONMENT') | trim | lower}}-oms-ipconfig"
+azure_vm_server_nic_ip_config_private_ip_allocation_method: "Static"
+azure_vm_server_nic_ip_config_private_ip_addrees: "{{ azure_vm_server_private_ip }}"
+azure_vm_server_network_interface_os_type: "Linux"
+
+azure_vm_server_network_security_group: "{{ azure_vm_prefix }}-{{ lookup('env','ENVIRONMENT') | trim | lower}}-oms-nsg"
+azure_vm_server_network_interface_name: "{{ azure_vm_prefix }}-{{ lookup('env','ENVIRONMENT') | trim | lower}}-oms-nic"
+
+azure_vm_server_vnet_name: "{{ lookup('env','VM_SERVER_VNET_NAME') | trim}}"
+azure_vm_server_subnet_name: "{{ lookup('env','VM_SERVER_SUBNET_NAME') | trim}}"

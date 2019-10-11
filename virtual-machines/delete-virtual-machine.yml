@@ -1,0 +1,71 @@
+---
+- hosts: localhost
+  tasks:
+  - name: Add host vm_1
+    add_host:
+      name: vm_1
+      ansible_host: "{{ azure_vm_server_private_ip }}"
+      ansible_user: "{{ azure_vm_server_username }}"
+      ansible_ssh_pass: "{{ azure_vm_server_password }}"
+      ansible_ssh_extra_args: "-o StrictHostKeyChecking=no"
+      groups: vm
+
+- hosts: vm_1
+  connection: local
+  tasks:
+    - name: Delete VM
+      azure_rm_virtualmachine:
+        resource_group: "{{ azure_resource_group }}"
+        name: "{{ azure_vm_server_name }}"
+        client_id: "{{ azure_client_id }}"
+        secret: "{{ azure_client_secret }}"
+        subscription_id: "{{ azure_subscription_id }}"
+        tenant: "{{ azure_tenant }}"
+        state: absent
+        vm_size: "{{ azure_vm_server_vm_size }}"
+        admin_username: "{{ azure_vm_server_username }}"
+        admin_password: "{{ azure_vm_server_password }}"
+        network_interfaces: "{{ azure_vm_server_network_interface_name }}"
+        image:
+          offer: "{{ azure_vm_server_image_offer }}"
+          publisher: "{{ azure_vm_server_image_publisher }}"
+          sku: "{{ azure_vm_server_image_sku }}"
+          version: "{{ azure_vm_server_image_version }}"
+
+    - name: Delete virtual network inteface card
+      azure_rm_networkinterface:
+        resource_group: "{{ azure_resource_group }}"
+        name: "{{ azure_vm_server_network_interface_name }}"
+        client_id: "{{ azure_client_id }}"
+        secret: "{{ azure_client_secret }}"
+        subscription_id: "{{ azure_subscription_id }}"
+        tenant: "{{ azure_tenant }}"
+        state: absent
+        virtual_network_name: "{{ azure_vm_server_vnet_name }}"
+        subnet_name: "{{ azure_vm_server_subnet_name }}"
+        security_group: "{{ azure_vm_server_network_security_group }}"
+        os_type: "{{ azure_vm_server_network_interface_os_type }}"
+        #public_ip: no
+        ip_configurations:
+          - name: "{{ azure_vm_server_nic_ip_config_name }}"
+            private_ip_allocation_method: "{{ azure_vm_server_nic_ip_config_private_ip_allocation_method }}"
+            private_ip_address: "{{ azure_vm_server_nic_ip_config_private_ip_addrees }}"
+
+    - name: Delete Network Security Group that allows SSH
+      azure_rm_securitygroup:
+        resource_group: "{{ azure_resource_group }}"
+        name: "{{ azure_vm_server_network_security_group }}"
+        client_id: "{{ azure_client_id }}"
+        secret: "{{ azure_client_secret }}"
+        subscription_id: "{{ azure_subscription_id }}"
+        tenant: "{{ azure_tenant }}"
+        state: absent
+
+    - name: Delete storage account
+      azure_rm_storageaccount:
+        resource_group: "{{ azure_resource_group }}"
+        name: "{{ azure_vm_server_account_storage_name }}"
+        account_type: "{{ azure_vm_server_account_storage_type }}"
+        state: absent
+        tags:
+            Environment: "{{ azure_environment }}"

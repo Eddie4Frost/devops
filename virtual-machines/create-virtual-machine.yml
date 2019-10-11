@@ -1,0 +1,9 @@
+---
+- hosts: localhost
+  tasks:
+
+- name: Setup VM on Azure
+  hosts: localhost
+  connection: local
+  roles:
+    - azure-vm
