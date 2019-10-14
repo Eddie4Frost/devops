@@ -60,12 +60,3 @@
         subscription_id: "{{ azure_subscription_id }}"
         tenant: "{{ azure_tenant }}"
         state: absent
-
-    - name: Delete storage account
-      azure_rm_storageaccount:
-        resource_group: "{{ azure_resource_group }}"
-        name: "{{ azure_vm_server_account_storage_name }}"
-        account_type: "{{ azure_vm_server_account_storage_type }}"
-        state: absent
-        tags:
-            Environment: "{{ azure_environment }}"

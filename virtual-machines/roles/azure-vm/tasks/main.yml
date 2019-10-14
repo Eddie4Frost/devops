@@ -2,14 +2,6 @@
 - debug:
     msg: "azure_environment {{ azure_environment }}"
 
-- name: Create storage account
-  azure_rm_storageaccount:
-    resource_group: "{{ azure_resource_group }}"
-    name: "{{ azure_vm_server_account_storage_name }}"
-    account_type: "{{ azure_vm_server_account_storage_type }}"
-    tags:
-        Environment: "{{ azure_environment }}"
-
 - name: Create Network Security Group that allows SSH
   azure_rm_securitygroup:
     resource_group: "{{ azure_resource_group }}"
@@ -60,7 +52,6 @@
     tenant: "{{ azure_tenant }}"
     state: present
     vm_size: "{{ azure_vm_server_vm_size }}"
-    storage_account_name: "{{ azure_vm_server_account_storage_name }}"
     managed_disk_type: "{{ azure_vm_server_managed_disk_type }}"
     admin_username: "{{ azure_vm_server_username }}"
     admin_password: "{{ azure_vm_server_password }}"
